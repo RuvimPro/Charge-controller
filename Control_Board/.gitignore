@@ -1,0 +1,18 @@
+# Altium Designer
+**/__Previews/
+**/History/
+Project Logs*/
+Project Outputs*/
+*.PcbDoc.htm
+**/*.ldb
+*.~*
+~$*
+
+# Система
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Altium output logs
+**/Status Report.Txt
+**/Status Report*.Txt

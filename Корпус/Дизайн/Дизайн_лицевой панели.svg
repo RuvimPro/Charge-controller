@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674 534" width="1010" height="801">
+<defs>
+<filter id="sh" x="-5%" y="-5%" width="115%" height="115%"><feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#00000044"/></filter>
+<radialGradient id="hg" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#888"/><stop offset="100%" stop-color="#333"/></radialGradient>
+</defs>
+<rect width="674" height="534" fill="#e8e8e8"/>
+<path d="M 30,63.6 L 30,470 A 33.6,33.6 0 0,0 63.6,503.6 L 610,503.6 A 33.6,33.6 0 0,0 643.6,470 L 643.6,63.6 A 33.6,33.6 0 0,0 610,30 L 63.6,30 A 33.6,33.6 0 0,0 30,63.6 Z" fill="#2A8948" stroke="#174d1c" stroke-width="1.5" filter="url(#sh)"/>
+<g fill="white" opacity="0.97" transform="translate(40.65,6) scale(0.185)">
+<path d="M 506.957031 418.375 C 490.089844 418.375 475.191406 413.511719 461.617188 407.109375 C 464.859375 415.914062 466.632812 425.421875 466.632812 435.335938 C 466.632812 469.988281 444.992188 499.664062 414.519531 511.601562 C 418.464844 512.046875 422.453125 512.335938 426.488281 512.417969 C 492.628906 513.773438 548.074219 466.304688 559.027344 403.421875 C 539.6875 414.242188 522.488281 418.375 506.957031 418.375"/>
+<path d="M 446.085938 435.335938 C 446.085938 401.511719 418.566406 373.996094 384.742188 373.996094 C 350.917969 373.996094 323.398438 401.511719 323.398438 435.335938 C 323.398438 452.015625 330.097656 467.152344 340.933594 478.21875 C 344.390625 481.351562 348.023438 484.28125 351.792969 487.039062 C 361.320312 493.132812 372.621094 496.679688 384.742188 496.679688 C 418.566406 496.679688 446.085938 469.160156 446.085938 435.335938"/>
+<path d="M 485.402344 351.019531 C 476.785156 351.019531 469.804688 344.035156 469.804688 335.421875 C 469.804688 326.808594 476.785156 319.824219 485.402344 319.824219 C 494.015625 319.824219 501 326.808594 501 335.421875 C 501 344.035156 494.015625 351.019531 485.402344 351.019531 M 479.789062 258.957031 C 479.640625 258.886719 479.523438 258.816406 479.367188 258.75 C 450.09375 246.015625 423.128906 244.542969 391.273438 247.523438 C 359.433594 250.503906 323.984375 262.257812 299.957031 284.664062 C 300.558594 285.726562 300.453125 285.542969 301.054688 286.605469 C 302.347656 286.265625 303.703125 286.085938 305.101562 286.097656 C 313.714844 286.15625 324.652344 294.210938 321.140625 305.261719 C 321.136719 305.273438 321.144531 305.28125 321.140625 305.292969 C 305.554688 327.605469 296.671875 354.964844 297.503906 384.484375 C 297.867188 397.402344 300.136719 409.871094 304.015625 421.628906 C 310.5625 382.976562 344.257812 353.445312 384.742188 353.445312 C 398.1875 353.445312 410.875 356.722656 422.078125 362.488281 L 422.085938 362.472656 C 430.820312 366.433594 439.355469 371.382812 447.605469 376.167969 C 480 394.953125 510.84375 412.832031 560.972656 378.074219 C 559.941406 324.386719 526.765625 278.488281 479.789062 258.957031"/></g>
+<text x="120" y="120" font-family="Century Gothic, Futura, sans-serif" font-size="15" fill="white" text-anchor="middle" letter-spacing="1">амаринго</text>
+<text x="365.5" y="78" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="500">Контроллер заряда</text>
+<rect x="447" y="68.5" width="46" height="19" rx="3" fill="white"/><text x="470" y="81.6" font-family="Century Gothic, Futura, sans-serif" font-size="12" fill="#2A8948" text-anchor="middle" font-weight="700">MPPT</text>
+<rect x="252" y="98" width="80" height="22" rx="3" fill="none" stroke="white" stroke-width="1.1"/><text x="292" y="113.2" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="middle" font-weight="400">Авто 12/24В</text>
+<rect x="339" y="98" width="90" height="22" rx="3" fill="none" stroke="white" stroke-width="1.1"/>
+<g font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" font-weight="400">
+<text x="346.75" y="113.2" textLength="23" lengthAdjust="spacingAndGlyphs">AGM</text>
+<circle cx="376.7" cy="109.5" r="0.7" stroke="none"/>
+<text x="380.85" y="113.2" textLength="21" lengthAdjust="spacingAndGlyphs">GEL</text>
+<circle cx="404.4" cy="109.5" r="0.7" stroke="none"/>
+<text x="408.25" y="113.2" textLength="13" lengthAdjust="spacingAndGlyphs">Pb</text>
+</g>
+<rect x="436" y="98" width="44" height="22" rx="3" fill="none" stroke="white" stroke-width="1.1"/><text x="458" y="113.2" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="middle" font-weight="400">IP56</text>
+<rect x="487" y="98" width="44" height="22" rx="3" fill="none" stroke="white" stroke-width="1.1"/><text x="509" y="113.2" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="middle" font-weight="400">IUoU</text>
+<g stroke="white" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M 104.64 190.8 V 180 Q 104.64 174 110.64 174 H 138.5"/><path d="M 119.3 205.6 H 138.5"/><path d="M 104.64 220.4 V 232 Q 104.64 238 110.64 238 H 138.5"/></g>
+<circle cx="104.64" cy="205.6" r="11" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="104.64" cy="205.6" r="11.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="146" cy="174" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="146" cy="174" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="158" y="178" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="start" font-weight="400">GEL</text>
+<circle cx="146" cy="206" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="146" cy="206" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="158" y="210" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="start" font-weight="400">AGM</text>
+<circle cx="146" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="146" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="158" y="242" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="start" font-weight="400">Pb</text>
+<rect x="252" y="158" width="32" height="96" rx="6" fill="none" stroke="white" stroke-width="1.1"/>
+<rect x="262" y="152" width="12" height="6" rx="3" fill="white"/>
+<line x1="252" y1="190" x2="284" y2="190" stroke="white" stroke-width="1.1" opacity="0.8"/>
+<line x1="252" y1="222" x2="284" y2="222" stroke="white" stroke-width="1.1" opacity="0.8"/>
+<circle cx="268" cy="174" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="268" cy="174" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="248" y="178" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="end" font-weight="400">Подзаряд</text>
+<circle cx="268" cy="206" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="268" cy="206" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="248" y="210" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="end" font-weight="400">Дозаряд</text>
+<circle cx="268" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="268" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="248" y="242" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="end" font-weight="400">Заряд</text>
+<path d="M 322 193 L 298 193 Q 292 193 292 199 L 292 248 Q 292 254 298 254 L 400 254 Q 406 254 406 248 L 406 199 Q 406 193 400 193 L 378 193" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="350" y="197" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="middle" font-weight="400" letter-spacing="0.55">РАБОТА</text>
+<g transform="translate(311 216) scale(1.42) translate(-309.05 -220.05)"><rect x="300.1" y="215.3" width="15.8" height="9.5" rx="1.5" stroke="white" stroke-width="0.775" fill="none"/><rect x="315.9" y="217.6" width="2.1" height="4.8" fill="white"/><path d="M 309.6 216.6 L 305.4 220.6 L 307.8 220.6 L 306.7 223.4 L 310.6 219.4 L 308.2 219.4 Z" fill="white"/></g>
+<g stroke="#ffffff" stroke-width="1.1" fill="none"><rect x="335.4" y="207" width="25.2" height="15.5" rx="2.5"/><rect x="375.4" y="207" width="25.2" height="15.5" rx="2.5"/></g>
+<text x="348" y="218.3" font-family="Century Gothic, Futura, sans-serif" font-size="9" fill="#ffffff" text-anchor="middle" font-weight="600">12В</text>
+<text x="388" y="218.3" font-family="Century Gothic, Futura, sans-serif" font-size="9" fill="#ffffff" text-anchor="middle" font-weight="600">24В</text>
+<circle cx="308" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="308" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="348" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="348" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="388" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="388" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<path d="M 455.5 193 L 420 193 Q 414 193 414 199 L 414 248 Q 414 254 420 254 L 544 254 Q 550 254 550 248 L 550 199 Q 550 193 544 193 L 506.5 193" fill="none" stroke="white" stroke-width="1.1"/>
+<text x="481" y="197" font-family="Century Gothic, sans-serif" font-size="10.2" fill="white" stroke="white" stroke-width="0.22" paint-order="stroke fill" stroke-linejoin="round" text-anchor="middle" font-weight="400" letter-spacing="0.55">ОТКАЗ</text>
+<g transform="translate(428 216) scale(1.38) translate(-428 -218.05)" stroke="white" stroke-width="0.797" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M 427.35 212.95 Q 428 211.7 428.65 212.95 L 433.95 223.3 Q 434.5 224.4 433.25 224.4 H 422.75 Q 421.5 224.4 422.05 223.3 Z"/><line x1="428" y1="216.5" x2="428" y2="220.2"/><circle cx="428" cy="222.6" r="0.8" fill="white" stroke="none"/></g>
+<g transform="translate(464 216) scale(1.38) translate(-464 -217.4)" stroke="white" stroke-width="0.797" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M 459.5 210.8 H 468 M 466 209.1 L 468 210.8 L 466 212.5"/><path d="M 468.5 213.7 H 460 M 462 212 L 460 213.7 L 462 215.4"/><rect x="457.4" y="217.5" width="13.2" height="6.6" rx="1"/><path d="M 470.6 219.2 H 472.3 V 222.4 H 470.6"/></g>
+<g transform="translate(500 216) scale(1.38) translate(-500 -217.4)" stroke="white" stroke-width="0.797" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M 495.5 210.8 H 504 M 502 209.1 L 504 210.8 L 502 212.5"/><path d="M 504.5 213.7 H 496 M 498 212 L 496 213.7 L 498 215.4"/><path d="M 495.35 217.5 H 504.65 Q 505.35 217.5 505.45 218.2 L 506.35 223.6 Q 506.5 224.3 505.8 224.3 H 494.2 Q 493.5 224.3 493.65 223.6 L 494.55 218.2 Q 494.65 217.5 495.35 217.5 Z"/><line x1="500" y1="217.5" x2="500" y2="224.3"/><line x1="494.1" y1="220.9" x2="505.9" y2="220.9"/></g>
+<g transform="translate(536 216) scale(1.38) translate(-536 -217.8)" stroke="white" stroke-width="0.797" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M 534.4 211.5 A 1.6 1.6 0 0 1 537.6 211.5 V 219.5 A 3.3 3.3 0 1 1 534.4 219.5 Z"/><line x1="536" y1="214" x2="536" y2="221.2"/><circle cx="536" cy="222.1" r="1.45" fill="white" stroke="none"/></g>
+<circle cx="428" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="428" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="464" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="464" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="500" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="500" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="536" cy="238" r="4" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="536" cy="238" r="4.70" fill="none" stroke="white" stroke-width="1.1"/>
+<g transform="translate(0 4)">
+<rect x="88" y="280" width="498" height="78" rx="6" fill="#2A8948" stroke="white" stroke-width="1.1"/>
+<line x1="187.6" y1="288" x2="187.6" y2="350" stroke="white" stroke-width="1.1"/>
+<line x1="287.2" y1="288" x2="287.2" y2="350" stroke="white" stroke-width="1.1"/>
+<line x1="386.8" y1="288" x2="386.8" y2="350" stroke="white" stroke-width="1.1"/>
+<line x1="486.4" y1="288" x2="486.4" y2="350" stroke="white" stroke-width="1.1"/>
+<text x="137.8" y="314" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="600">240 Вт</text>
+<text x="137.8" y="329.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">Макс. мощность СП</text>
+<text x="137.8" y="339.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">при 12В АКБ</text>
+<text x="237.4" y="314" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="600">430 Вт</text>
+<text x="237.4" y="329.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">Макс. мощность СП</text>
+<text x="237.4" y="339.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">при 24В АКБ</text>
+<text x="337" y="314" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="600">50 В</text>
+<text x="337" y="329.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">Макс. напряжение</text>
+<text x="337" y="339.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">хол. хода СП</text>
+<text x="436.6" y="314" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="600">15 А</text>
+<text x="436.6" y="334.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">Ток заряда АКБ</text>
+<text x="536.2" y="314" font-family="Century Gothic, Futura, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="600">15 А</text>
+<text x="536.2" y="334.5" font-family="Century Gothic, Futura, sans-serif" font-size="8.2" fill="white" stroke="white" stroke-width="0.1" paint-order="stroke fill" text-anchor="middle">Ток нагрузки</text>
+</g>
+<g stroke="white" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="239.0" cy="389.0" r="3.8"/>
+<line x1="239.0" y1="383.0" x2="239.0" y2="384.2"/><line x1="234.75" y1="384.75" x2="235.65" y2="385.65"/><line x1="243.25" y1="384.75" x2="242.35" y2="385.65"/><line x1="245.0" y1="389.0" x2="243.8" y2="389.0"/><line x1="243.25" y1="393.25" x2="242.35" y2="392.35"/>
+<path d="M 227.65 390.8 H 238.35 Q 239.0 390.8 239.18 391.45 L 242.4 403.95 Q 242.6 404.7 241.8 404.7 H 224.2 Q 223.4 404.7 223.6 403.95 L 226.82 391.45 Q 227.0 390.8 227.65 390.8 Z" fill="#2A8948"/>
+<line x1="233.0" y1="390.8" x2="233.0" y2="404.7"/><line x1="225.2" y1="397.75" x2="240.8" y2="397.75"/>
+</g>
+<g stroke="white" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="326.74" y="389.2" width="21" height="16" rx="2.3"/>
+<path d="M 331.24 389.2 V 386.5 H 334.74 V 389.2 M 339.74 389.2 V 386.5 H 343.24 V 389.2"/>
+<line x1="332.24" y1="394.8" x2="332.24" y2="399.6"/><line x1="329.84" y1="397.2" x2="334.64" y2="397.2"/>
+<line x1="339.84" y1="397.2" x2="344.64" y2="397.2"/>
+</g>
+<g stroke="white" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M 434.24 394.2 A 7 7 0 1 1 448.24 394.2 C 448.24 398.0 445.9 399.4 444.9 401.3 H 437.58 C 436.58 399.4 434.24 398.0 434.24 394.2 Z"/>
+<line x1="437.74" y1="404.0" x2="444.74" y2="404.0"/><line x1="438.74" y1="407.0" x2="443.74" y2="407.0"/>
+<line x1="441.24" y1="384.0" x2="441.24" y2="386.0"/><line x1="432.5" y1="387.0" x2="434.0" y2="388.4"/><line x1="450.0" y1="387.0" x2="448.5" y2="388.4"/>
+</g>
+<circle cx="207.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="207.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="259.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="259.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="311.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="311.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="363.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="363.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="415.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="415.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<circle cx="467.24" cy="428.76" r="14" fill="url(#hg)" stroke="#333" stroke-width="0.6"/><circle cx="467.24" cy="428.76" r="14.70" fill="none" stroke="white" stroke-width="1.1"/>
+<g stroke="white" stroke-width="1.1" fill="none" stroke-linecap="round">
+<path d="M 201.74 463 H 212.74 M 207.24 457.5 V 468.5"/>
+<path d="M 253.74 463 H 264.74"/>
+<path d="M 305.74 463 H 316.74 M 311.24 457.5 V 468.5"/>
+<path d="M 357.74 463 H 368.74"/>
+<path d="M 409.74 463 H 420.74 M 415.24 457.5 V 468.5"/>
+<path d="M 461.74 463 H 472.74"/>
+</g>
+<circle cx="616.8" cy="56.8" r="13.2" fill="url(#hg)" stroke="#333" stroke-width="1"/>
+<circle cx="616.8" cy="476.8" r="13.2" fill="url(#hg)" stroke="#333" stroke-width="1"/>
+<circle cx="56.8" cy="476.8" r="13.2" fill="url(#hg)" stroke="#333" stroke-width="1"/>
+<circle cx="56.8" cy="56.8" r="13.2" fill="url(#hg)" stroke="#333" stroke-width="1"/>
+</svg>

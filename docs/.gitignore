@@ -1,0 +1,24 @@
+```gitignore
+# КОМПАС-3D — временные файлы блокировки
+*.cdw.bar
+*.m3d.bar
+*.a3d.bar
+*.spw.bar
+*.frw.bar
+*.grb.bar
+*.kdw.bar
+
+# КОМПАС-3D — резервные копии
+*.cdw.bak
+*.m3d.bak
+*.a3d.bak
+*.spw.bak
+*.frw.bak
+
+# КОМПАС-3D — файлы автосохранения
+*.cdw~
+*.m3d~
+*.a3d~
+*.spw~
+*.frw~
+```
