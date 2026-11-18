@@ -1,0 +1,10 @@
+
+State Machine - |sensor_module_top|hcsr04_driver:u_hcsr04_driver|state_reg
+Name state_reg.ST_PAUSE state_reg.ST_EVALUATE state_reg.ST_WAIT_ECHO_FALL state_reg.ST_MEASURE_ECHO state_reg.ST_WAIT_ECHO_RISE state_reg.ST_TRIG_PULSE state_reg.ST_IDLE 
+state_reg.ST_IDLE 0 0 0 0 0 0 0 
+state_reg.ST_TRIG_PULSE 0 0 0 0 0 1 1 
+state_reg.ST_WAIT_ECHO_RISE 0 0 0 0 1 0 1 
+state_reg.ST_MEASURE_ECHO 0 0 0 1 0 0 1 
+state_reg.ST_WAIT_ECHO_FALL 0 0 1 0 0 0 1 
+state_reg.ST_EVALUATE 0 1 0 0 0 0 1 
+state_reg.ST_PAUSE 1 0 0 0 0 0 1 

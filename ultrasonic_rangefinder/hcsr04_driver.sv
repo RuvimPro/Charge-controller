@@ -1,0 +1,352 @@
+//------------------------------------------------------------------------------
+// Файл       : hcsr04_driver.sv
+// Модуль     : hcsr04_driver — драйвер ОДНОГО измерения датчика HC-SR04
+// Тактовая   : 50 МГц (1 мм = 294 такта, trig = 12 мкс = 600 тактов)
+//
+// Архитектура — классический автомат Мили + тракт данных:
+//
+//   [1] next_state_logic — комбинационная логика следующего состояния
+//   [2] state_reg        — регистры: хранение текущего состояния (+ trig)
+//   [3] output_logic     — комбинационная логика выходов и команд
+//   [4] datapath         — тракт данных (счётчики, регистры результата, компараторы)
+//------------------------------------------------------------------------------
+module hcsr04_driver #(
+  parameter int CLK_PER_MM     = 294,                                  // тактов эха на 1 мм (50 МГц, 340 м/с)
+  parameter int TRIG_CLKS      = 600,                                  // длительность trig, тактов (12 мкс при 50 МГц)
+  parameter int ECHO_WAIT_CLKS = 1_000_000,                              // таймаут появления эха, тактов (2 мс при 50 МГц)
+  parameter int DIST_MIN_MM    = rangefinder_pkg::DEFAULT_DIST_MIN_MM, // нижняя граница диапазона, мм
+  parameter int DIST_MAX_MM    = rangefinder_pkg::DEFAULT_DIST_MAX_MM  // верхняя граница диапазона, мм
+) (
+  input  logic                                   clk,      // тактовая частота 50 МГц
+  input  logic                                   rst,      // синхронный сброс, активный уровень '1'
+  input  logic                                   en,       // '1' — работа разрешена (switch включён)
+  input  logic                                   start,    // импульс: начать одно измерение
+  input  logic                                   echo,     // эхо датчика (уже синхронизированное)
+
+  output logic                                   trig,     // запускающий импульс на датчик
+  output logic                                   done,     // строб готовности результата, ровно 1 такт
+  output logic [rangefinder_pkg::DIST_WIDTH-1:0] dist_mm,  // расстояние, мм
+  output logic                                   err       // '1' — измерение неудачно (вне диапазона / нет эха)
+);
+
+  import rangefinder_pkg::*;
+
+
+  //----------------------------------------------------------------------------
+  // Состояния конечного автомата
+  //----------------------------------------------------------------------------
+  typedef enum logic [2:0] {
+    S_IDLE,       // ожидание команды start
+    S_TRIG,       // выдача импульса trig (TRIG_CLKS тактов)
+    S_WAIT_ECHO,  // ожидание начала эха (не дольше ECHO_WAIT_CLKS тактов)
+    S_MEASURE,    // измерение длительности эха в миллиметрах
+    S_DONE        // строб готовности результата (1 такт)
+  } state_t;
+
+  //----------------------------------------------------------------------------
+  // Команды тракту данных (выходы автомата Мили -> входы тракта данных)
+  //----------------------------------------------------------------------------
+
+  // Общий таймер (trig / ожидание эха)
+  typedef enum logic {
+    TMR_CLEAR,       // сбросить в 0
+    TMR_COUNT        // +1
+  } tmr_cmd_t;
+
+  // Прескалер: делит такты на миллиметры
+  typedef enum logic [1:0] {
+    PRE_CLEAR,       // сбросить в 0
+    PRE_SET_ONE,     // загрузить 1 (такт обнаружения эха уже учтён)
+    PRE_COUNT        // +1
+  } pre_cmd_t;
+
+  // Счётчик миллиметров
+  typedef enum logic [1:0] {
+    MM_CLEAR,        // сбросить в 0
+    MM_HOLD,         // хранить текущее значение
+    MM_COUNT         // +1
+  } mm_cmd_t;
+
+  // Регистры результата (расстояние + флаг ошибки)
+  typedef enum logic [1:0] {
+    RESULT_HOLD,       // хранить предыдущий результат
+    RESULT_LATCH_OK,   // записать расстояние = счётчик мм, err = 0
+    RESULT_LATCH_ERR   // записать расстояние = 0,          err = 1
+  } result_cmd_t;
+
+  // Все команды одним вектором
+  typedef struct packed {
+    tmr_cmd_t    tmr;
+    pre_cmd_t    pre;
+    mm_cmd_t     mm;
+    result_cmd_t result;
+  } dp_ctrl_t;
+
+  // Безопасная команда «по умолчанию»: счётчики сброшены, результат хранится
+  localparam dp_ctrl_t DP_CTRL_DEFAULT = {
+    TMR_CLEAR,    // tmr
+    PRE_CLEAR,    // pre
+    MM_CLEAR,     // mm
+    RESULT_HOLD   // result
+  };
+
+  //----------------------------------------------------------------------------
+  // Флаги состояния (выходы тракта данных -> входы автомата)
+  //----------------------------------------------------------------------------
+  typedef struct packed {
+    logic trig_finished;  // таймер досчитал длительность trig
+    logic wait_timeout;   // таймер досчитал таймаут ожидания эха
+    logic pre_full;       // прескалер досчитал до конца (прошёл 1 мм)
+    logic out_of_range;   // счётчик мм вне диапазона [MIN, MAX]
+    logic meas_over;      // измерение закончено: эхо пропало или слишком далеко
+  } dp_status_t;
+
+  //----------------------------------------------------------------------------
+  // Разрядности и граничные константы тракта данных
+  //----------------------------------------------------------------------------
+  localparam int TMR_MAX = imax(TRIG_CLKS, ECHO_WAIT_CLKS);
+  localparam int TMR_W   = bit_width(TMR_MAX);
+  localparam int PRE_W   = bit_width(CLK_PER_MM - 1);
+  localparam int MM_W    = bit_width(DIST_MAX_MM + 1);   // mm_reg доходит до MAX+1
+
+  typedef logic [TMR_W-1:0]      tmr_t;
+  typedef logic [PRE_W-1:0]      pre_t;
+  typedef logic [MM_W-1:0]       mm_t;
+  typedef logic [DIST_WIDTH-1:0] dist_t;
+
+  localparam logic [TMR_W-1:0] TRIG_LAST = tmr_t'(TRIG_CLKS      - 1);
+  localparam logic [TMR_W-1:0] WAIT_LAST = tmr_t'(ECHO_WAIT_CLKS - 1);
+  localparam logic [PRE_W-1:0] PRE_LAST  = pre_t'(CLK_PER_MM     - 1);
+  localparam logic [MM_W-1:0]  MM_MIN    = mm_t'(DIST_MIN_MM);
+  localparam logic [MM_W-1:0]  MM_MAX    = mm_t'(DIST_MAX_MM);
+
+  //----------------------------------------------------------------------------
+  // Внутренние сигналы и регистры (начальные значения — для инициализации в ПЛИС)
+  //----------------------------------------------------------------------------
+  state_t                state_reg = S_IDLE, state_next; // состояние автомата
+  logic                  trig_reg  = 1'b0,   trig_next;  // зарегистрированный выход trig
+  dp_ctrl_t              ctrl;                           // команды тракту данных [3] -> [4]
+  dp_status_t            status;                         // флаги тракта данных   [4] -> [1], [3]
+
+  logic [TMR_W-1:0]      tmr_reg  = '0,   tmr_next;      // общий таймер: trig и ожидание эха
+  logic [PRE_W-1:0]      pre_reg  = '0,   pre_next;      // прескалер: такты -> миллиметры
+  logic [MM_W-1:0]       mm_reg   = '0,   mm_next;       // счётчик миллиметров
+  logic [DIST_WIDTH-1:0] dist_reg = '0,   dist_next;     // результат измерения (мм)
+  logic                  err_reg  = 1'b0, err_next;      // признак неудачного измерения
+
+  //============================================================================
+  // [1] Блок 1: комбинационная логика СЛЕДУЮЩЕГО СОСТОЯНИЯ автомата
+  //     state_next = f(state_reg, en, start, echo, status)
+  //============================================================================
+  always_comb begin
+    state_next = state_reg;                 // по умолчанию — остаёмся
+
+    if (!en) begin
+      state_next = S_IDLE;                  // выключили — в покой из любого состояния
+    end else begin
+      case (state_reg)
+
+        S_IDLE: begin
+          if (start)
+            state_next = S_TRIG;
+        end
+
+        S_TRIG: begin
+          if (status.trig_finished)
+            state_next = S_WAIT_ECHO;
+        end
+
+        S_WAIT_ECHO: begin
+          if (echo)                         // эхо пришло — приоритетнее таймаута
+            state_next = S_MEASURE;
+          else if (status.wait_timeout)     // эха нет слишком долго
+            state_next = S_DONE;
+        end
+
+        S_MEASURE: begin
+          if (status.meas_over)
+            state_next = S_DONE;
+        end
+
+        S_DONE: begin
+          state_next = S_IDLE;
+        end
+
+        default: begin                      // недопустимый код состояния
+          state_next = S_IDLE;
+        end
+
+      endcase
+    end
+  end
+
+  //============================================================================
+  // [2] Блок 2: РЕГИСТРЫ автомата — хранение текущего состояния (+ trig)
+  //============================================================================
+  // trig уходит на внешний вывод прямо с триггера (чтобы не было глитчей).
+  // trig_reg всегда равен (state_reg == S_TRIG).
+  always_ff @(posedge clk) begin
+    if (rst) begin
+      state_reg <= S_IDLE;
+      trig_reg  <= 1'b0;
+    end else begin
+      state_reg <= state_next;
+      trig_reg  <= trig_next;
+    end
+  end
+
+  //============================================================================
+  // [3] Блок 3: комбинационная логика ВЫХОДОВ автомата (автомат Мили)
+  //     выходы = g(state_reg, en, echo, status)
+  //============================================================================
+
+  // Выходы, не зависящие от входов (done не гасится сигналом en)
+  assign done      = (state_reg  == S_DONE);
+  assign trig_next = (state_next == S_TRIG);
+
+  // Команды тракту данных
+  always_comb begin
+    ctrl = DP_CTRL_DEFAULT;   // счётчики сброшены, результат хранится
+
+    if (en) begin
+      case (state_reg)
+
+        // Отсчёт длительности импульса trig
+        S_TRIG: begin
+          if (!status.trig_finished)
+            ctrl.tmr = TMR_COUNT;
+        end
+
+        // Ожидание начала эха
+        S_WAIT_ECHO: begin
+          if (echo) begin
+            ctrl.pre = PRE_SET_ONE;               // такт обнаружения эха = 1-й такт мм
+          end else if (status.wait_timeout) begin
+            ctrl.result = RESULT_LATCH_ERR;       // эха нет — ошибка
+          end else begin
+            ctrl.tmr = TMR_COUNT;
+          end
+        end
+
+        // Измерение: такты -> миллиметры
+        S_MEASURE: begin
+          if (status.meas_over) begin
+            ctrl.result = status.out_of_range ? RESULT_LATCH_ERR
+                                              : RESULT_LATCH_OK;
+          end else if (status.pre_full) begin
+            ctrl.mm  = MM_COUNT;                  // прошёл 1 мм (pre -> 0 по умолчанию)
+          end else begin
+            ctrl.pre = PRE_COUNT;
+            ctrl.mm  = MM_HOLD;
+          end
+        end
+
+        default: begin
+          // S_IDLE, S_DONE: команды по умолчанию
+        end
+
+      endcase
+    end
+  end
+
+  //============================================================================
+  // [4] Блок 4: ТРАКТ ДАННЫХ — счётчики, регистры результата, компараторы
+  //============================================================================
+
+  //----------------------------------------------------------------------------
+  // Компараторы (флаги состояния)
+  //----------------------------------------------------------------------------
+  logic trig_finished;   // таймер дошёл до конца импульса trig (TRIG_CLKS тактов)
+  logic wait_timeout;    // прождали ECHO_WAIT_CLKS тактов, а эха нет
+  logic pre_full;        // прошло CLK_PER_MM тактов — это 1 мм
+  logic too_near;        // ближе нижней границы диапазона
+  logic too_far;         // дальше верхней границы диапазона
+  logic out_of_range;    // вне диапазона
+  logic meas_over;       // измерение закончено: эхо пропало или слишком далеко
+
+  assign trig_finished = (tmr_reg == TRIG_LAST);
+  assign wait_timeout  = (tmr_reg == WAIT_LAST);
+  assign pre_full      = (pre_reg == PRE_LAST);
+
+  assign too_near      = (mm_reg < MM_MIN);
+  assign too_far       = (mm_reg > MM_MAX);
+  assign out_of_range  = too_near | too_far;
+
+  assign meas_over     = ~echo | too_far;
+
+  assign status = {
+    trig_finished,
+    wait_timeout,
+    pre_full,
+    out_of_range,
+    meas_over
+  };
+
+  //----------------------------------------------------------------------------
+  // Исполнение команд: вычисление следующих значений регистров
+  //----------------------------------------------------------------------------
+  always_comb begin
+    // Общий таймер
+    case (ctrl.tmr)
+      TMR_COUNT: tmr_next = tmr_reg + 1'b1;
+      default:   tmr_next = '0;                    // TMR_CLEAR
+    endcase
+
+    // Прескалер
+    case (ctrl.pre)
+      PRE_SET_ONE: pre_next = pre_t'(1);
+      PRE_COUNT:   pre_next = pre_reg + 1'b1;
+      default:     pre_next = '0;                  // PRE_CLEAR
+    endcase
+
+    // Счётчик миллиметров
+    case (ctrl.mm)
+      MM_COUNT: mm_next = mm_reg + 1'b1;
+      MM_HOLD:  mm_next = mm_reg;
+      default:  mm_next = '0;                      // MM_CLEAR
+    endcase
+
+    // Регистры результата
+    case (ctrl.result)
+      RESULT_LATCH_OK: begin
+        dist_next = dist_t'(mm_reg);
+        err_next  = 1'b0;
+      end
+      RESULT_LATCH_ERR: begin
+        dist_next = '0;
+        err_next  = 1'b1;
+      end
+      default: begin                               // RESULT_HOLD
+        dist_next = dist_reg;
+        err_next  = err_reg;
+      end
+    endcase
+  end
+
+  //----------------------------------------------------------------------------
+  // Регистры тракта данных
+  //----------------------------------------------------------------------------
+  always_ff @(posedge clk) begin
+    if (rst) begin
+      tmr_reg  <= '0;
+      pre_reg  <= '0;
+      mm_reg   <= '0;
+      dist_reg <= '0;
+      err_reg  <= 1'b0;
+    end else begin
+      tmr_reg  <= tmr_next;
+      pre_reg  <= pre_next;
+      mm_reg   <= mm_next;
+      dist_reg <= dist_next;
+      err_reg  <= err_next;
+    end
+  end
+
+  //----------------------------------------------------------------------------
+  // Выходы модуля
+  //----------------------------------------------------------------------------
+  assign trig    = trig_reg;
+  assign dist_mm = dist_reg;
+  assign err     = err_reg;
+
+endmodule : hcsr04_driver

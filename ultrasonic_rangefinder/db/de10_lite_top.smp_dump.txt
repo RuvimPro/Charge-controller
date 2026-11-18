@@ -1,0 +1,15 @@
+
+State Machine - |de10_lite_top|rangefinder_top:u_rangefinder|median_avg_filter:u_filter|state_reg
+Name state_reg.S_OUT state_reg.S_SUB_MAX state_reg.S_SUB_MIN state_reg.S_ACC 
+state_reg.S_ACC 0 0 0 0 
+state_reg.S_SUB_MIN 0 0 1 1 
+state_reg.S_SUB_MAX 0 1 0 1 
+state_reg.S_OUT 1 0 0 1 
+
+State Machine - |de10_lite_top|rangefinder_top:u_rangefinder|hcsr04_driver:u_driver|state_reg
+Name state_reg.S_MEASURE state_reg.S_WAIT_ECHO state_reg.S_TRIG state_reg.S_IDLE state_reg.S_DONE 
+state_reg.S_IDLE 0 0 0 0 0 
+state_reg.S_TRIG 0 0 1 1 0 
+state_reg.S_WAIT_ECHO 0 1 0 1 0 
+state_reg.S_MEASURE 1 0 0 1 0 
+state_reg.S_DONE 0 0 0 1 1 
